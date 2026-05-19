@@ -1,0 +1,390 @@
+.container {
+  padding: 20rpx;
+  background: #fff;
+  min-height: 100vh;
+}
+
+/* 追加：底部栏占位 */
+.container.has-bottom-bar {
+  padding-bottom: 160rpx;
+}
+
+.album-header {
+  display: flex;
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+  background: #f8f8f8;
+  border-radius: 16rpx;
+}
+
+.album-big-cover {
+  width: 240rpx;
+  height: 240rpx;
+  border-radius: 12rpx;
+  margin-right: 24rpx;
+  background: #eee;
+  flex-shrink: 0;
+}
+
+.album-meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.album-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 12rpx;
+  color: #333;
+}
+
+.album-artist {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10rpx 0 16rpx;
+  padding: 0 10rpx;
+}
+
+.section-title-wrap {
+  flex: 1;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  display: inline-block;
+  position: relative;
+  padding: 0 20rpx;
+}
+
+.section-title::before,
+.section-title::after {
+  content: '';
+  display: inline-block;
+  width: 60rpx;
+  height: 2rpx;
+  background: #7B68EE;
+  vertical-align: middle;
+  margin: 0 16rpx;
+}
+
+.select-all-btn {
+  font-size: 24rpx;
+  color: #7B68EE;
+  padding: 6rpx 16rpx;
+  border: 1rpx solid #7B68EE;
+  border-radius: 24rpx;
+  background: #fff;
+  flex-shrink: 0;
+  margin-left: 16rpx;
+}
+
+
+.song-list {
+  margin-top: 0;
+}
+
+.song-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.song-cover {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 8rpx;
+  margin-right: 20rpx;
+  background: #eee;
+  flex-shrink: 0;
+}
+
+.song-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.song-name {
+  font-size: 30rpx;
+  color: #333;
+  margin-bottom: 8rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-artist {
+  font-size: 24rpx;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-action {
+  padding: 0 20rpx;
+}
+
+.icon-add {
+  font-size: 44rpx;
+  color: #7B68EE;
+  font-weight: bold;
+}
+
+/* ===== 追加：选中态（与 Music 页面一致）===== */
+.song-item.selected {
+  background: #f0ebff;
+  border-radius: 12rpx;
+  margin: 0 -10rpx;
+  padding: 20rpx 10rpx;
+  border-bottom: none;
+}
+
+.check-mark {
+  width: 48rpx;
+  height: 48rpx;
+  line-height: 48rpx;
+  text-align: center;
+  background: #7B68EE;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 28rpx;
+  flex-shrink: 0;
+  margin-left: 16rpx;
+}
+
+.empty {
+  text-align: center;
+  padding: 60rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* ========== 追加：底部固定栏（与 Music 完全一致）========== */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120rpx;
+  background: #fff;
+  box-shadow: 0 -4rpx 24rpx rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30rpx;
+  z-index: 100;
+}
+
+.bottom-left {
+  height: 90rpx;
+  display: flex;
+  align-items: center;
+}
+
+.stack-area {
+  position: relative;
+  height: 90rpx;
+  flex-shrink: 0;
+}
+
+.stack-img {
+  position: absolute;
+  width: 80rpx;
+  height: 90rpx;
+  top: 0;
+  border-radius: 12rpx;
+  border: 3rpx solid #fff;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.2);
+  background: #f0f0f0;
+}
+
+.stack-badge {
+  position: absolute;
+  top: -10rpx;
+  right: -10rpx;
+  width: 44rpx;
+  height: 44rpx;
+  background: #FFD700;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  font-weight: bold;
+  border: 3rpx solid #fff;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.15);
+  z-index: 10;
+}
+
+.bottom-right {
+  display: flex;
+  align-items: center;
+}
+
+/* ========== 追加：按钮样式 ========== */
+.rank-btn {
+  padding: 0 40rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+  border: none;
+  margin: 0;
+}
+
+.rank-btn.disabled {
+  background: #f0f0f0;
+  color: #999;
+}
+
+.rank-btn.active {
+  background: #FFD700;
+  color: #333;
+}
+
+.rank-btn.full {
+  width: 100%;
+  border-radius: 40rpx;
+}
+
+/* ========== 追加：编辑面板 ========== */
+.edit-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+}
+
+.edit-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.edit-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-radius: 24rpx 24rpx 0 0;
+  padding: 30rpx 30rpx 40rpx;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.edit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.edit-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.edit-clear {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  color: #666;
+  font-size: 28rpx;
+  padding: 10rpx;
+}
+
+.icon-bin {
+  font-size: 28rpx;
+}
+
+.clear-text {
+  font-size: 26rpx;
+}
+
+.edit-scroll {
+  flex: 1;
+  min-height: 200rpx;
+  max-height: 50vh;
+}
+
+.edit-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.edit-thumb {
+  width: 80rpx;
+  height: 100rpx;
+  border-radius: 8rpx;
+  margin-right: 20rpx;
+  background: #f0f0f0;
+  flex-shrink: 0;
+}
+
+.edit-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.edit-name {
+  font-size: 30rpx;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.edit-artist {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 6rpx;
+}
+
+.edit-delete {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 32rpx;
+}
+
+.edit-footer {
+  margin-top: 20rpx;
+}

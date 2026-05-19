@@ -1,0 +1,55 @@
+<view class="compare-container">
+  <view class="compare-header">
+    <text class="compare-title">「{{title}}」</text>
+    <text class="compare-subtitle">品味对决结果</text>
+  </view>
+
+  <view class="similarity-card">
+    <view class="similarity-ring">
+      <text class="similarity-num">{{similarity}}%</text>
+    </view>
+    <text class="verdict-text">{{verdict}}</text>
+    <text class="similarity-desc">Top 10 重合度</text>
+  </view>
+
+  <view class="compare-list-section">
+    <view class="section-title">Top 10 对比</view>
+    <view class="compare-table-header">
+      <text class="header-rank">排名</text>
+      <text class="header-user">发起者</text>
+      <text class="header-vs">VS</text>
+      <text class="header-user">挑战者</text>
+    </view>
+
+    <view class="compare-item" wx:for="{{inviterList}}" wx:key="index">
+      <view class="rank-col">
+        <text class="rank-num {{index < 3 ? 'top-rank' : ''}}">{{index + 1}}</text>
+      </view>
+      <view class="user-col {{item.isCommon ? 'common-item' : ''}}">
+        <image class="compare-cover" src="{{item.cover}}" mode="aspectFill" />
+        <text class="compare-name">{{item.title}}</text>
+        <text wx:if="{{item.isCommon}}" class="common-tag">重合</text>
+      </view>
+      <view class="vs-col"><text class="vs-line">—</text></view>
+      <view class="user-col {{inviteeList[index].isCommon ? 'common-item' : ''}}">
+        <image class="compare-cover" src="{{inviteeList[index].cover}}" mode="aspectFill" />
+        <text class="compare-name">{{inviteeList[index].title}}</text>
+        <text wx:if="{{inviteeList[index].isCommon}}" class="common-tag">重合</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="common-section" wx:if="{{commonList.length > 0}}">
+    <view class="section-title">共同喜爱</view>
+    <view class="common-grid">
+      <view class="common-card" wx:for="{{commonList}}" wx:key="index">
+        <image class="common-cover" src="{{item.cover}}" mode="aspectFill" />
+        <text class="common-title">{{item.title}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="compare-footer">
+    <button class="footer-btn btn-primary" bindtap="goHome">我也要玩</button>
+  </view>
+</view>

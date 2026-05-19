@@ -1,0 +1,32 @@
+<view class="home-container">
+  <view class="header">
+    <image class="app-logo" src="/images/logo.png" mode="widthFix" />
+  </view>
+
+  <view class="card-list">
+    <!-- 电影 Ranking 卡片 -->
+    <view class="card movie-card" bindtap="goToMovies">
+      <view class="card-content">
+        <text class="card-emoji">🎬</text>
+        <text class="card-title">电影 Ranking</text>
+        <text class="card-desc">搜索全球电影，发现好片</text>
+      </view>
+      <view class="card-arrow">›</view>
+    </view>
+
+    <!-- 音乐 Ranking 卡片 -->
+    <view class="card music-card" bindtap="goToMusic">
+      <view class="card-content">
+        <text class="card-emoji">🎶</text>
+        <text class="card-title">音乐 Ranking</text>
+        <text class="card-desc">搜索专辑与歌曲，发现好音乐</text>
+      </view>
+      <view class="card-arrow">›</view>
+    </view>
+
+    <!-- 历史记录 -->
+    <view class="history-link" bindtap="goToHistory">
+      <text>📜 历史记录</text>
+    </view>
+  </view>
+</view>

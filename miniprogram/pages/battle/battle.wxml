@@ -1,0 +1,59 @@
+<view class="battle-container">
+  <!-- 顶部导航 -->
+  <view class="battle-header">
+    <view class="back-btn" bindtap="onBack">
+      <text class="back-icon">‹</text>
+    </view>
+    <view class="progress-text">
+      <text>第 {{currentRound >= totalRounds ? totalRounds : currentRound + 1}} / {{totalRounds}} 轮</text>
+    </view>
+    <view class="finish-btn" bindtap="onFinishEarly">
+      <text>不等了</text>
+    </view>
+  </view>
+
+  <!-- 对战主体 -->
+  <view class="battle-body">
+    <!-- 左侧 -->
+    <view class="battle-side side-left {{animating ? 'slide-out-left' : 'slide-in'}}">
+      <image class="bg-blur" src="{{leftItem.posterPath || leftItem.thumb || '/images/default-poster.jpg'}}" mode="aspectFill" />
+      <image class="main-poster {{battleType === 'music' ? 'music-cover' : 'movie-cover'}}" src="{{leftItem.posterPath || leftItem.thumb || '/images/default-poster.jpg'}}" mode="aspectFill" lazy-load binderror="onImageError" data-side="left" />
+      <view class="info-overlay">
+        <text class="item-title">{{leftItem.title || leftItem.name}}</text>
+        <text class="item-subtitle">{{leftItem.year || leftItem.artist || ''}}</text>
+      </view>
+      <view class="vote-btn-area">
+        <button class="vote-btn vote-left" bindtap="onVote" data-side="left" disabled="{{isSubmitting}}">
+          <text class="vote-arrow">←</text>
+          <text>选这部</text>
+        </button>
+      </view>
+    </view>
+
+    <!-- VS 徽章 -->
+    <view class="vs-badge">VS</view>
+
+    <!-- 右侧 -->
+    <view class="battle-side side-right {{animating ? 'slide-out-right' : 'slide-in'}}">
+      <image class="bg-blur" src="{{rightItem.posterPath || rightItem.thumb || '/images/default-poster.jpg'}}" mode="aspectFill" />
+      <image class="main-poster {{battleType === 'music' ? 'music-cover' : 'movie-cover'}}" src="{{rightItem.posterPath || rightItem.thumb || '/images/default-poster.jpg'}}" mode="aspectFill" lazy-load binderror="onImageError" data-side="right" />
+      <view class="info-overlay">
+        <text class="item-title">{{rightItem.title || rightItem.name}}</text>
+        <text class="item-subtitle">{{rightItem.year || rightItem.artist || ''}}</text>
+      </view>
+      <view class="vote-btn-area">
+        <button class="vote-btn vote-right" bindtap="onVote" data-side="right" disabled="{{isSubmitting}}">
+          <text>选这部</text>
+          <text class="vote-arrow">→</text>
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部平局按钮 -->
+  <view class="draw-bar">
+    <button class="draw-btn" bindtap="onVote" data-side="draw" disabled="{{isSubmitting}}">
+      <text>选不出来</text>
+    </button>
+  </view>
+</view>

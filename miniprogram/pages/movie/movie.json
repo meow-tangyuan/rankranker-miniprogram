@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "电影搜索",
+  "usingComponents": {
+    "cloud-tip-modal": "/components/cloudTipModal/index"
+  }
+}

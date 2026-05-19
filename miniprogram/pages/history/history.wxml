@@ -1,0 +1,27 @@
+<view class="history-container">
+  <view class="history-header">
+    <text class="back-btn" bindtap="goHome">‹ 返回</text>
+    <text class="header-title">历史记录</text>
+    <view style="width: 100rpx;"></view>
+  </view>
+
+  <view class="history-list" wx:if="{{list.length > 0}}">
+    <view class="history-item" wx:for="{{list}}" wx:key="_id" bindtap="onItemTap" data-item="{{item}}">
+      <view class="item-main">
+        <text class="item-title">{{item.title || '未命名榜单'}}</text>
+        <view class="item-tags">
+          <text class="tag type-tag">{{item.type === 'movie' ? '电影' : '音乐'}}</text>
+          <text class="tag mode-tag">{{item.mode === 'full' ? '全量' : 'Elo'}}</text>
+          <text class="tag status-tag {{item.status}}">{{item.progressText}}</text>
+        </view>
+        <text class="item-date">{{item.dateText}}</text>
+      </view>
+      <text class="item-arrow">›</text>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{!loading && list.length === 0}}">
+    <text class="empty-icon">📭</text>
+    <text class="empty-text">暂无对战记录</text>
+  </view>
+</view>

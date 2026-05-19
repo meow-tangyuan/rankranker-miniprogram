@@ -1,0 +1,100 @@
+<view class="result-container">
+  <view class="result-header">
+    <text class="trophy-icon">🏆</text>
+    <text class="header-title">对战完成</text>
+    <text class="header-subtitle" wx:if="{{title}}">{{title}}</text>
+  </view>
+
+  <!-- Top 3 -->
+  <view class="top3-section">
+    <view class="top-card rank-2" wx:if="{{top3[1]}}">
+      <image class="top-cover" src="{{top3[1].displayCover}}" mode="aspectFill" />
+      <text class="rank-badge">🥈</text>
+      <text class="top-title">{{top3[1].displayTitle}}</text>
+      <text class="top-subtitle">{{top3[1].displaySub}}</text>
+      <text class="top-score">{{top3[1].displayScore}}</text>
+    </view>
+
+    <view class="top-card rank-1" wx:if="{{top3[0]}}">
+      <image class="top-cover" src="{{top3[0].displayCover}}" mode="aspectFill" />
+      <text class="rank-badge">🥇</text>
+      <text class="top-title">{{top3[0].displayTitle}}</text>
+      <text class="top-subtitle">{{top3[0].displaySub}}</text>
+      <text class="top-score">{{top3[0].displayScore}}</text>
+    </view>
+
+    <view class="top-card rank-3" wx:if="{{top3[2]}}">
+      <image class="top-cover" src="{{top3[2].displayCover}}" mode="aspectFill" />
+      <text class="rank-badge">🥉</text>
+      <text class="top-title">{{top3[2].displayTitle}}</text>
+      <text class="top-subtitle">{{top3[2].displaySub}}</text>
+      <text class="top-score">{{top3[2].displayScore}}</text>
+    </view>
+  </view>
+
+  <!-- 完整列表 -->
+  <view class="list-section" wx:if="{{rankedList.length > 0}}">
+    <view class="section-title">完整排名</view>
+    <view class="rank-item" wx:for="{{rankedList}}" wx:key="index">
+      <view class="rank-num">{{item.rank}}</view>
+      <image class="rank-cover" src="{{item.displayCover}}" mode="aspectFill" />
+      <view class="rank-info">
+        <text class="rank-name">{{item.displayTitle}}</text>
+        <text class="rank-sub">{{item.displaySub}}</text>
+      </view>
+      <view class="rank-score">
+        <text>{{item.displayScore}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 未出战 -->
+  <view class="unplayed-section" wx:if="{{unplayedList.length > 0}}">
+    <view class="section-title">未出战</view>
+    <view class="rank-item" wx:for="{{unplayedList}}" wx:key="index">
+      <view class="rank-num gray">-</view>
+      <image class="rank-cover" src="{{item.displayCover}}" mode="aspectFill" />
+      <view class="rank-info">
+        <text class="rank-name">{{item.displayTitle}}</text>
+        <text class="rank-sub">{{item.displaySub}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 社交裂变 -->
+  <view class="social-section" wx:if="{{!challengeId}}">
+    <button class="social-btn btn-share" bindtap="generatePoster">📸 生成分享海报</button>
+    <button class="social-btn btn-challenge" bindtap="challengeFriend">⚔️ 挑战好友</button>
+  </view>
+
+  <view class="social-section" wx:if="{{challengeId && challengeStatus !== 'completed'}}">
+    <button class="social-btn btn-share" bindtap="generatePoster">📸 生成分享海报</button>
+    <view class="challenge-tip">等待好友接受挑战…</view>
+  </view>
+
+  <view class="social-section" wx:if="{{challengeStatus === 'completed'}}">
+    <button class="social-btn btn-compare" bindtap="goCompare">
+      👥 查看对决结果（相似度 {{similarity}}%）
+    </button>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="result-footer">
+    <button class="footer-btn btn-secondary" bindtap="goAgain">再来一次</button>
+    <button class="footer-btn btn-primary" bindtap="goHome">返回首页</button>
+  </view>
+</view>
+
+<!-- 海报预览弹窗 -->
+<view class="poster-modal" wx:if="{{showPosterModal}}" bindtap="closePoster">
+  <view class="poster-content" catchtap="preventClose">
+    <image class="poster-image" src="{{posterUrl}}" mode="widthFix" show-menu-by-longpress />
+    <view class="poster-actions">
+      <button class="poster-btn btn-save" bindtap="savePoster">保存到相册</button>
+      <button class="poster-btn btn-close" bindtap="closePoster">关闭</button>
+    </view>
+  </view>
+</view>
+
+<!-- 隐藏的海报 canvas（2d） -->
+<canvas type="2d" id="posterCanvas" class="poster-canvas"></canvas>

@@ -1,0 +1,24 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/index/index",
+    "pages/movie/movie",
+    "pages/music/music",
+    "pages/example/index",
+    "pages/album/album",
+    "pages/battle/battle",
+    "pages/result/result",
+    "pages/history/history",
+    "pages/compare/compare"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "云开发 QuickStart",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}

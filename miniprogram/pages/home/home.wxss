@@ -1,0 +1,100 @@
+.home-container {
+  min-height: 100vh;
+  background: #FAF3E0;
+  padding: 60rpx 40rpx;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 80rpx;
+}
+
+.app-logo {
+  width: 400rpx;
+  height: auto;
+  display: block;
+}
+
+.app-subtitle {
+  display: block;
+  font-size: 28rpx;
+  color: rgba(247, 245, 230, 0.8);
+  letter-spacing: 2rpx;
+  margin-top: 16rpx;
+}
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 40rpx;
+}
+
+.card {
+  background: rgba(247, 245, 230, 0.08);
+  border-radius: 28rpx;
+  padding: 48rpx 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 12rpx 40rpx rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 2rpx solid rgba(255, 255, 255, 0.1);
+}
+
+.card:active {
+  transform: scale(0.96);
+  box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.15);
+}
+
+.movie-card {
+  background: linear-gradient(135deg, #ff6a00 0%, #f5b52b 100%);
+  border: 2rpx solid rgba(255, 107, 53, 0.25);
+}
+
+.music-card {
+  background: linear-gradient(135deg, #00ffc3 0%, #12cb8d 100%);
+  border: 2rpx solid rgba(78, 205, 196, 0.25);
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.card-emoji {
+  font-size: 64rpx;
+  margin-bottom: 8rpx;
+  filter: drop-shadow(0 2rpx 4rpx rgba(0, 0, 0, 0.15));
+}
+
+.card-title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #F7F5E6;
+  letter-spacing: 2rpx;
+}
+
+.card-desc {
+  font-size: 26rpx;
+  color: rgba(247, 245, 230, 0.9);
+}
+
+.card-arrow {
+  font-size: 48rpx;
+  color: #F7F5E6;
+  font-weight: bold;
+  opacity: 0.85;
+}
+
+.coming-soon {
+  font-size: 24rpx;
+  background: rgba(247, 245, 230, 0.2);
+  color: #F7F5E6;
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  border: 1rpx solid rgba(247, 245, 230, 0.15);
+}

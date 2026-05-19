@@ -1,0 +1,112 @@
+<!-- miniprogram/pages/movie/movie.wxml -->
+<view class="container {{selectedIds.length > 0 ? 'has-bottom-bar' : ''}}">
+  <view class="search-box">
+    <view class="search-inner">
+  <text class="search-icon">⌕</text>
+  <input 
+    type="text" 
+    placeholder="输入电影名或影人名（如：爱乐之城 / Nolan）" 
+    placeholder-class="placeholder-style"
+    value="{{keyword}}"
+    bindinput="onInput"
+    confirm-type="search"
+    bindconfirm="searchMovies"
+  />
+</view>
+
+  </view>
+
+  <view class="movie-list">
+    <view 
+      wx:for="{{movies}}" 
+      wx:key="id" 
+      class="movie-item {{item.selected ? 'selected' : ''}}"
+      bindtap="onToggleMovie"
+      data-id="{{item.id}}"
+    >
+      <view class="poster-wrap">
+        <image 
+          src="{{item.posterPath || '/images/default-poster.jpg'}}"
+          mode="aspectFill" 
+          class="poster"
+          lazy-load="{{true}}"
+          binderror="onImageError"
+          data-index="{{index}}"
+        />
+        <view class="selected-overlay" wx:if="{{item.selected}}">
+          <view class="check-circle">✓</view>
+        </view>
+      </view>
+      <text class="title">{{item.title}}</text>
+      <text class="year">{{item.year}}</text>
+    </view>
+  </view>
+</view>
+
+<!-- 底部栏 -->
+<view class="bottom-bar" wx:if="{{selectedIds.length > 0}}">
+  <view class="bottom-left" bindtap="openEditPanel">
+    <view class="stack-area" style="width: {{stackAreaWidth}}rpx;">
+      <image 
+        wx:for="{{stackDisplay}}" 
+        wx:key="id"
+        class="stack-img"
+        style="left: {{item.stackLeft}}rpx; z-index: {{item.stackZIndex}};"
+        src="{{item.posterPath || '/images/default-poster.jpg'}}"
+        mode="aspectFill"
+      />
+      <view class="stack-badge">{{selectedIds.length}}</view>
+    </view>
+  </view>
+
+  <view class="bottom-right">
+    <button 
+      class="rank-btn {{selectedIds.length >= 2 ? 'active' : 'disabled'}}"
+      bindtap="startRanking"
+      disabled="{{selectedIds.length < 2}}"
+    >
+      {{selectedIds.length >= 2 ? 'START RANKING!' : '至少选择2个对象'}}
+    </button>
+  </view>
+</view>
+
+<!-- 编辑面板 -->
+<view class="edit-panel" wx:if="{{showEditPanel}}" catchtouchmove="preventTouchMove">
+  <view class="edit-mask" bindtap="closeEditPanel"></view>
+  <view class="edit-content">
+    <view class="edit-header">
+      <text class="edit-title">已选对象</text>
+      <view class="edit-clear" bindtap="clearSelected">
+        <text class="icon-bin">🗑</text>
+        <text class="clear-text">清空</text>
+      </view>
+    </view>
+
+    <scroll-view scroll-y class="edit-scroll">
+      <view 
+        wx:for="{{selectedMovies}}" 
+        wx:key="id"
+        class="edit-item"
+      >
+        <image class="edit-thumb" src="{{item.posterPath || '/images/default-poster.jpg'}}" mode="aspectFill" />
+        <view class="edit-info">
+          <text class="edit-name">{{item.title}}</text>
+          <text class="edit-year" wx:if="{{item.year}}">{{item.year}}</text>
+        </view>
+        <view class="edit-delete" bindtap="removeSelected" data-id="{{item.id}}">
+          <text class="icon-close">✕</text>
+        </view>
+      </view>
+    </scroll-view>
+
+    <view class="edit-footer">
+      <button 
+        class="rank-btn {{selectedIds.length >= 2 ? 'active' : 'disabled'}} full"
+        bindtap="startRanking"
+        disabled="{{selectedIds.length < 2}}"
+      >
+        {{selectedIds.length >= 2 ? 'START RANKING!' : '至少选择2个对象'}}
+      </button>
+    </view>
+  </view>
+</view>

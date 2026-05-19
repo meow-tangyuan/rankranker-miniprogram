@@ -1,0 +1,121 @@
+<view class="container {{selectedSongs.length > 0 ? 'has-bottom-bar' : ''}}">
+
+<!-- 专辑头部信息 -->
+<view class="album-header" wx:if="{{album}}">
+  <image class="album-big-cover" src="{{album.thumb}}" mode="aspectFill" />
+  <view class="album-meta">
+    <text class="album-title">{{album.name}}</text>
+    <text class="album-artist">{{album.artist}}</text>
+  </view>
+</view>
+
+<!-- 歌曲列表 -->
+<view class="section-header">
+  <view class="section-title-wrap">
+    <view class="section-title">专辑歌曲</view>
+  </view>
+  <view class="select-all-btn" bindtap="toggleSelectAll">
+    {{selectedSongIds.length === songs.length && songs.length > 0 ? '取消全选' : '一键全选'}}
+  </view>
+</view>
+
+
+
+<view class="song-list" wx:if="{{songs.length > 0}}">
+  <view 
+    wx:for="{{songs}}" 
+    wx:key="id" 
+    class="song-item {{item.selected ? 'selected' : ''}}"
+    bindtap="onSelectSong"
+    data-song="{{item}}"
+  >
+    <image 
+      src="{{item.thumb}}" 
+      mode="aspectFill" 
+      class="song-cover"
+      lazy-load
+      binderror="onSongImageError"
+      data-index="{{index}}"
+    />
+    <view class="song-info">
+      <text class="song-name">{{item.displayName}}</text>
+      <text class="song-artist">{{item.artist}}</text>
+    </view>
+    <!-- 未选中显示 +，选中显示紫勾 -->
+    <view class="song-action" wx:if="{{!item.selected}}">
+      <text class="icon-add">+</text>
+    </view>
+    <view class="check-mark" wx:if="{{item.selected}}">✓</view>
+  </view>
+</view>
+
+<view class="empty" wx:if="{{!loading && songs.length === 0}}">
+  <text>该专辑暂无歌曲信息</text>
+</view>
+
+</view>
+
+<!-- ========== 底部栏 ========== -->
+<view class="bottom-bar" wx:if="{{selectedSongs.length > 0}}">
+<view class="bottom-left" bindtap="openEditPanel">
+  <view class="stack-area" style="width: {{stackAreaWidth}}rpx;">
+    <image 
+      wx:for="{{stackDisplay}}" 
+      wx:key="id"
+      class="stack-img"
+      style="left: {{item.stackLeft}}rpx; z-index: {{item.stackZIndex}};"
+      src="{{item.thumb || '/images/default-poster.jpg'}}"
+      mode="aspectFill"
+    />
+    <view class="stack-badge">{{selectedSongs.length}}</view>
+  </view>
+</view>
+<view class="bottom-right">
+  <button 
+    class="rank-btn {{selectedSongs.length >= 2 ? 'active' : 'disabled'}}"
+    bindtap="startRanking"
+    disabled="{{selectedSongs.length < 2}}"
+  >
+    {{selectedSongs.length >= 2 ? 'START RANKING!' : '至少选择2个对象'}}
+  </button>
+</view>
+</view>
+
+<!-- ========== 编辑面板 ========== -->
+<view class="edit-panel" wx:if="{{showEditPanel}}" catchtouchmove="preventTouchMove">
+<view class="edit-mask" bindtap="closeEditPanel"></view>
+<view class="edit-content">
+  <view class="edit-header">
+    <text class="edit-title">已选对象</text>
+    <view class="edit-clear" bindtap="clearSelected">
+      <text class="icon-bin">🗑️</text>
+      <text class="clear-text">清空</text>
+    </view>
+  </view>
+  <scroll-view scroll-y class="edit-scroll">
+    <view 
+      wx:for="{{selectedSongs}}" 
+      wx:key="id"
+      class="edit-item"
+    >
+      <image class="edit-thumb" src="{{item.thumb || '/images/default-poster.jpg'}}" mode="aspectFill" />
+      <view class="edit-info">
+        <text class="edit-name">{{item.name}}</text>
+        <text class="edit-artist" wx:if="{{item.artist}}">{{item.artist}}</text>
+      </view>
+      <view class="edit-delete" bindtap="removeSelected" data-id="{{item.id}}">
+        <text class="icon-close">✕</text>
+      </view>
+    </view>
+  </scroll-view>
+  <view class="edit-footer">
+    <button 
+      class="rank-btn {{selectedSongs.length >= 2 ? 'active' : 'disabled'}} full"
+      bindtap="startRanking"
+      disabled="{{selectedSongs.length < 2}}"
+    >
+      {{selectedSongs.length >= 2 ? 'START RANKING!' : '至少选择2个对象'}}
+    </button>
+  </view>
+</view>
+</view>

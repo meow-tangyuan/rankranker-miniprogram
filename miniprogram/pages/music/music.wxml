@@ -1,0 +1,180 @@
+<view class="container {{selectedItems.length > 0 ? 'has-bottom-bar' : ''}}">
+  
+  <!-- 搜索框 -->
+  <view class="search-box">
+    <view class="search-inner">
+      <text class="search-icon">⌕</text>
+      <input 
+        type="text" 
+        placeholder="{{placeholderText}}"
+        placeholder-class="placeholder-style"
+        value="{{keyword}}"
+        bindinput="onInput"
+        confirm-type="search"
+        bindconfirm="searchMusic"
+      />
+    </view>
+  </view>
+
+  <!-- ========== 歌曲 Ranking ========== -->
+  <block wx:if="{{mode === 'auto'}}">
+    <!-- 相关专辑（可跳转详情） -->
+    <view class="section" wx:if="{{albums.length > 0}}">
+      <view class="section-title">相关专辑</view>
+      <view class="result-list">
+        <view 
+          wx:for="{{albums}}" 
+          wx:key="id" 
+          class="result-item album-item"
+          bindtap="goToAlbumDetail"
+          data-id="{{item.id}}"
+        >
+          <image 
+            src="{{item.thumb}}" 
+            mode="aspectFill" 
+            class="cover"
+            lazy-load
+            binderror="onImageError"
+            data-index="{{index}}"
+            data-type="album"
+          />
+          <view class="info">
+            <text class="name">{{item.name}}</text>
+            <text class="artist">{{item.artist}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 相关歌曲（可多选） -->
+    <view class="section" wx:if="{{tracks.length > 0}}">
+      <view class="section-title">相关歌曲</view>
+      <view class="result-list">
+        <view 
+          wx:for="{{tracks}}" 
+          wx:key="id" 
+          class="result-item track-item {{item.selected ? 'selected' : ''}}"
+          bindtap="onToggleTrack"
+          data-index="{{index}}"
+        >
+          <image 
+            src="{{item.thumb}}" 
+            mode="aspectFill" 
+            class="cover"
+            lazy-load
+            binderror="onImageError"
+            data-index="{{index}}"
+            data-type="track"
+          />
+          <view class="info">
+            <text class="name">{{item.name}}</text>
+            <text class="artist">{{item.artist}}</text>
+            <text class="album" wx:if="{{item.album}}">专辑: {{item.album}}</text>
+          </view>
+          <view class="check-mark" wx:if="{{item.selected}}">✓</view>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- ========== 专辑 Ranking ========== -->
+  <block wx:if="{{mode === 'album'}}">
+    <view class="result-list">
+      <view 
+        wx:for="{{albums}}" 
+        wx:key="id" 
+        class="result-item album-item {{item.selected ? 'selected' : ''}}"
+        bindtap="onToggleAlbum"
+        data-index="{{index}}"
+      >
+        <image 
+          src="{{item.thumb}}" 
+          mode="aspectFill" 
+          class="cover"
+          lazy-load
+          binderror="onImageError"
+          data-index="{{index}}"
+          data-type="album"
+        />
+        <view class="info">
+          <text class="name">{{item.name}}</text>
+          <text class="artist">{{item.artist}}</text>
+        </view>
+        <view class="check-mark" wx:if="{{item.selected}}">✓</view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 空状态 -->
+  <view class="empty" wx:if="{{tracks.length === 0 && albums.length === 0 && keyword}}">
+    <text>没有找到相关结果</text>
+  </view>
+
+</view>
+
+<!-- ========== 底部栏 ========== -->
+<view class="bottom-bar" wx:if="{{selectedItems.length > 0}}">
+  <view class="bottom-left" bindtap="openEditPanel">
+    <view class="stack-area" style="width: {{stackAreaWidth}}rpx;">
+      <image 
+        wx:for="{{stackDisplay}}" 
+        wx:key="id"
+        class="stack-img"
+        style="left: {{item.stackLeft}}rpx; z-index: {{item.stackZIndex}};"
+        src="{{item.thumb || '/images/default-poster.jpg'}}"
+        mode="aspectFill"
+      />
+      <view class="stack-badge">{{selectedItems.length}}</view>
+    </view>
+  </view>
+  <view class="bottom-right">
+    <button 
+      class="rank-btn {{selectedItems.length >= 2 ? 'active' : 'disabled'}}"
+      bindtap="startRanking"
+      disabled="{{selectedItems.length < 2}}"
+    >
+      {{selectedItems.length >= 2 ? 'START RANKING!' : '至少选择2个对象'}}
+    </button>
+  </view>
+</view>
+
+<!-- ========== 编辑面板 ========== -->
+<view class="edit-panel" wx:if="{{showEditPanel}}" catchtouchmove="preventTouchMove">
+  <view class="edit-mask" bindtap="closeEditPanel"></view>
+  <view class="edit-content">
+    <view class="edit-header">
+      <text class="edit-title">已选对象</text>
+      <view class="edit-clear" bindtap="clearSelected">
+        <text class="icon-bin">🗑️</text>
+        <text class="clear-text">清空</text>
+      </view>
+    </view>
+
+    <scroll-view scroll-y class="edit-scroll">
+      <view 
+        wx:for="{{selectedItems}}" 
+        wx:key="id"
+        class="edit-item"
+      >
+        <image class="edit-thumb" src="{{item.thumb || '/images/default-poster.jpg'}}" mode="aspectFill" />
+        <view class="edit-info">
+          <text class="edit-name">{{item.name}}</text>
+          <text class="edit-artist" wx:if="{{item.artist}}">{{item.artist}}</text>
+        </view>
+        <view class="edit-delete" bindtap="removeSelected" data-id="{{item.id}}" data-type="{{item.type}}">
+          <text class="icon-close">✕</text>
+        </view>
+      </view>
+    </scroll-view>
+
+    <view class="edit-footer">
+      <button 
+        class="rank-btn {{selectedItems.length >= 2 ? 'active' : 'disabled'}} full"
+        bindtap="startRanking"
+        disabled="{{selectedItems.length < 2}}"
+      >
+        {{selectedItems.length >= 2 ? 'START RANKING!' : '至少选择2个对象'}}
+      </button>
+    </view>
+  </view>
+</view>

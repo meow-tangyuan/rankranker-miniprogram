@@ -1,0 +1,251 @@
+page {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.battle-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* 顶部导航 */
+.battle-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100rpx;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30rpx;
+  z-index: 100;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.08);
+}
+
+.back-btn {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-icon {
+  font-size: 48rpx;
+  color: #333;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.progress-text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.finish-btn {
+  font-size: 26rpx;
+  color: #999;
+  padding: 10rpx 20rpx;
+}
+
+/* 主体对战区 */
+.battle-body {
+  flex: 1;
+  display: flex;
+  position: relative;
+  margin-top: 100rpx;
+  margin-bottom: 140rpx;
+}
+
+.battle-side {
+  width: 50vw;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-blur {
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
+  filter: blur(10px);
+}
+
+/* ========== 封面公共样式 ========== */
+.main-poster {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 16rpx;
+  box-shadow: 0 20rpx 60rpx rgba(0,0,0,0.6);
+  z-index: 2;
+}
+
+/* 电影：竖版海报比例 */
+.main-poster.movie-cover {
+  width: 68%;
+  max-height: 52%;
+}
+
+/* 音乐：正方形封面 */
+.main-poster.music-cover {
+  width: 300rpx;
+  height: 300rpx;
+  border-radius: 12rpx;
+}
+
+.info-overlay {
+  position: absolute;
+  bottom: 180rpx;
+  left: 0;
+  right: 0;
+  padding: 0 30rpx;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.item-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 2rpx 8rpx rgba(0,0,0,0.9);
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.item-subtitle {
+  font-size: 24rpx;
+  color: rgba(255,255,255,0.85);
+  text-shadow: 0 2rpx 6rpx rgba(0,0,0,0.8);
+  display: block;
+}
+
+/* VS 徽章 */
+.vs-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: #FFD700;
+  color: #333;
+  font-weight: bold;
+  font-size: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 24rpx rgba(0,0,0,0.4);
+  z-index: 10;
+}
+
+/* 左右选择按钮 */
+.vote-btn-area {
+  position: absolute;
+  bottom: 50rpx;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 5;
+}
+
+.vote-btn {
+  width: 260rpx;
+  height: 90rpx;
+  border-radius: 45rpx;
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.3);
+  background: linear-gradient(135deg, #7B68EE, #764ba2);
+}
+
+.vote-btn[disabled] {
+  opacity: 0.5;
+}
+
+.vote-arrow {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+/* 底部平局按钮 */
+.draw-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120rpx;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 100;
+  box-shadow: 0 -2rpx 12rpx rgba(0,0,0,0.08);
+}
+
+.draw-btn {
+  width: 400rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 40rpx;
+  background: #f0f0f0;
+  color: #666;
+  font-size: 28rpx;
+  font-weight: bold;
+  border: none;
+}
+
+.draw-btn:active {
+  background: #e0e0e0;
+}
+
+/* 切换动画 */
+.slide-out-left {
+  animation: slideOutLeft 0.3s ease-in forwards;
+}
+
+.slide-out-right {
+  animation: slideOutRight 0.3s ease-in forwards;
+}
+
+.slide-in {
+  animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideOutLeft {
+  to { transform: translateX(-35%); opacity: 0; }
+}
+
+@keyframes slideOutRight {
+  to { transform: translateX(35%); opacity: 0; }
+}
+
+@keyframes slideIn {
+  from { transform: scale(0.92); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

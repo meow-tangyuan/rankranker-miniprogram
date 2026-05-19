@@ -1,0 +1,17 @@
+# 微信开发者工具自动生成的文件
+node_modules/
+miniprogram_npm/
+.eslintrc.js
+.project.config.json
+.svn/
+
+# 编译输出
+dist/
+build/
+
+# 系统文件
+Thumbs.db
+.DS_Store
+
+# 日志
+*.log
