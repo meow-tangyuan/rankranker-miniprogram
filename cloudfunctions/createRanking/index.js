@@ -16,7 +16,7 @@ function calcEloPair(items) {
 }
 
 exports.main = async (event, context) => {
-  const { selectedItems, type, title = '' } = event;
+  const { selectedItems, type, title = '', mode: inputMode } = event;
   const { OPENID } = cloud.getWXContext();
 
   if (!selectedItems || selectedItems.length < 2) {
@@ -24,7 +24,9 @@ exports.main = async (event, context) => {
   }
 
   const n = selectedItems.length;
-  const mode = n <= 15 ? 'full' : 'elo';
+  
+  // ✅ FIX #12: 优先使用传入的 mode，没有传再按条目数算
+  const mode = inputMode || (n <= 15 ? 'full' : 'elo');
 
   const items = selectedItems.map((item, index) => ({
     ...item,

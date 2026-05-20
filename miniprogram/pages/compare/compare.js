@@ -6,7 +6,10 @@ Page({
     inviterList: [],
     inviteeList: [],
     commonList: [],
-    verdict: ''
+    verdict: '',
+    // ✅ FIX #11: 新增对齐后的对比列表
+    compareList: [],
+    showWaiting: false
   },
 
   async onLoad(options) {
@@ -26,16 +29,39 @@ Page({
         name: 'getChallengeResult',
         data: { challengeId: this.data.challengeId }
       });
-      if (!result || !result.success) throw new Error(result.errMsg || '加载失败');
+
+      // ✅ FIX #4: 处理未完成状态
+      if (!result || !result.success) {
+        if (result && result.status === 'waiting') {
+          wx.hideLoading();
+          this.setData({ showWaiting: true });
+          return;
+        }
+        throw new Error(result?.errMsg || '加载失败');
+      }
 
       const { title, similarity, inviterList, inviteeList, commonList } = result;
+
+      // ✅ FIX #11: 在 JS 端对齐长度，生成 compareList
+      const maxLen = Math.max(inviterList.length, inviteeList.length);
+      const compareList = [];
+      for (let i = 0; i < maxLen; i++) {
+        compareList.push({
+          rank: i + 1,
+          inviter: inviterList[i] || null,
+          invitee: inviteeList[i] || null
+        });
+      }
+
       this.setData({
         title,
         similarity,
         inviterList,
         inviteeList,
         commonList,
-        verdict: this.getVerdict(similarity)
+        compareList,
+        verdict: this.getVerdict(similarity),
+        showWaiting: false
       });
       wx.hideLoading();
     } catch (err) {

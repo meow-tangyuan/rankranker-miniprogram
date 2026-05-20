@@ -16,11 +16,34 @@ Page({
   },
 
   async onLoad(options) {
-    const { rankingId, challengeId } = options;
+    let { rankingId, challengeId, scene } = options;
+
+    // ✅ FIX #1: 解析小程序码 scene 参数
+    if (scene && !rankingId) {
+      try {
+        const decodedScene = decodeURIComponent(scene);
+        // scene 可能直接就是 rankingId（推荐方案），也可能是 rankingId=xxx 格式
+        if (decodedScene.includes('=')) {
+          const params = {};
+          decodedScene.split('&').forEach(pair => {
+            const [k, v] = pair.split('=');
+            if (k && v) params[k] = v;
+          });
+          rankingId = params.rankingId || decodedScene;
+          challengeId = params.challengeId || challengeId;
+        } else {
+          rankingId = decodedScene;
+        }
+      } catch (e) {
+        console.error('scene 解析失败', e);
+      }
+    }
+
     if (!rankingId) {
       wx.showToast({ title: '无效结果ID', icon: 'none' });
       return wx.navigateBack();
     }
+
     this.setData({ rankingId, challengeId });
     await this.loadResult();
     if (challengeId) {
@@ -161,7 +184,9 @@ Page({
     const { result } = await wx.cloud.callFunction({
       name: 'getRankingQRCode',
       data: {
-        scene: `rankingId=${rankingId}`,
+        // ✅ FIX #1: 如果 rankingId 是 ObjectId（24字符），直接作为 scene
+        // 如果超过32字符限制，需要改用短码方案
+        scene: rankingId,
         page: 'pages/result/result'
       }
     });
@@ -478,7 +503,10 @@ Page({
         }
       });
 
-      if (!result || !result.challengeId) throw new Error('创建挑战失败');
+      // ✅ FIX #13: 处理云函数返回的错误
+      if (!result || !result.success) {
+        throw new Error(result?.errMsg || '创建挑战失败');
+      }
 
       this.setData({
         challengeId: result.challengeId,

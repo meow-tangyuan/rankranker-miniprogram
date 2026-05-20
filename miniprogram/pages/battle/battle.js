@@ -84,7 +84,8 @@ Page({
       });
       if (!result || !result.success) throw new Error(result?.errMsg || '挑战加载失败');
 
-      const { items, title, type } = result;
+      const { items, title, type, mode } = result;
+
       const initializedItems = items.map((item, index) => ({
         ...item,
         index,
@@ -94,12 +95,14 @@ Page({
         matches: 0
       }));
 
+      // ✅ FIX #12: 透传 mode 给 createRanking
       const { result: createRes } = await wx.cloud.callFunction({
         name: 'createRanking',
         data: {
           selectedItems: initializedItems,
           title,
-          type
+          type,
+          mode
         }
       });
 
@@ -192,12 +195,16 @@ Page({
           data: { challengeId, inviteeRankingId: rankingId }
         });
         wx.hideLoading();
+        // ✅ FIX #13: 处理 completeChallenge 返回的错误
         if (result && result.success) {
           wx.redirectTo({ url: `/pages/compare/compare?challengeId=${challengeId}` });
           return;
+        } else {
+          console.error('completeChallenge 失败', result?.errMsg);
         }
       } catch (e) {
         wx.hideLoading();
+        console.error('completeChallenge 异常', e);
       }
     }
 

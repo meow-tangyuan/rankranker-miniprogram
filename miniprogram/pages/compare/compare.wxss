@@ -146,3 +146,7 @@ page { background: #FAF3E0; }
   background: linear-gradient(135deg, #FF6A00, #F5B52B);
   color: #fff; box-shadow: 0 6rpx 20rpx rgba(255, 106, 0, 0.25);
 }
+
+.empty-slot { color: #ccc; text-align: center; line-height: 80rpx; }
+.waiting-card { text-align: center; padding: 60rpx; }
+.waiting-icon { font-size: 80rpx; display: block; }
